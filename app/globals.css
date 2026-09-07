@@ -1,26 +1,294 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "tw-shimmer";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-}
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Landing identity — "dokumen bawaan" (paperwork vernacular) */
+  --color-paper: #f7f5ef;
+  --color-paper-card: #fffdf8;
+  --color-ink: #17334a;
+  --color-ink-soft: #47637a;
+  --color-stamp: #bc3f22;
+  --color-stamp-deep: #8a2a12;
+  --color-sah: #2f7a52;
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-stix);
+  --font-code: var(--font-plex-mono);
+
+  /* Chat-specific accent colors */
+  --color-emerald-400: oklch(0.765 0.177 163);
+  --color-emerald-500: oklch(0.696 0.17 162.48);
+  --color-emerald-600: oklch(0.596 0.145 163.22);
+  --color-teal-400: oklch(0.757 0.132 181.81);
+  --color-teal-500: oklch(0.704 0.14 182.5);
+  --color-cyan-400: oklch(0.789 0.109 209.72);
+
+  @keyframes collapsible-down {
+  from {
+    height: 0;
+    }
+  to {
+    height: var(--radix-collapsible-content-height, var(--collapsible-panel-height, auto));
+    }
+  }
+  @keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height, var(--collapsible-panel-height, auto));
+    }
+  to {
+    height: 0;
+    }
+  }
+  @keyframes ambient-float {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.15;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.15);
+      opacity: 0.25;
+    }
+  }
+  @keyframes pulse-gentle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  /* Dark emerald theme — matches the landing page */
+  --background: oklch(0.145 0.005 260);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.19 0.005 260);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.19 0.005 260);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.696 0.17 162.48);
+  --primary-foreground: oklch(0.145 0.005 260);
+  --secondary: oklch(0.22 0.005 260);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.22 0.005 260);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.22 0.008 163);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.696 0.17 162.48);
+  --chart-1: oklch(0.765 0.177 163);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.596 0.145 163.22);
+  --chart-4: oklch(0.757 0.132 181.81);
+  --chart-5: oklch(0.789 0.109 209.72);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.17 0.005 260);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.696 0.17 162.48);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(0.22 0.005 260);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.696 0.17 162.48);
+}
+
+.dark {
+  --background: oklch(0.12 0.005 260);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.17 0.005 260);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.17 0.005 260);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.765 0.177 163);
+  --primary-foreground: oklch(0.12 0.005 260);
+  --secondary: oklch(0.22 0.005 260);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.22 0.005 260);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.22 0.008 163);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.765 0.177 163);
+  --chart-1: oklch(0.765 0.177 163);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.596 0.145 163.22);
+  --chart-4: oklch(0.757 0.132 181.81);
+  --chart-5: oklch(0.789 0.109 209.72);
+  --sidebar: oklch(0.17 0.005 260);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.765 0.177 163);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.22 0.005 260);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.765 0.177 163);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@custom-variant data-open (&:where([data-state="open"], [data-open]:not([data-open="false"])));
+
+@custom-variant data-closed (&:where([data-state="closed"], [data-closed]:not([data-closed="false"])));
+
+/* ── Chat: the consultation room ─────────────────────────────────
+   Same paperwork ground as the landing. The shell scopes shadcn's
+   semantic vars onto the ledger palette so utilities used inside
+   (bg-muted, text-muted-foreground, …) resolve to ink-on-paper.
+   Ground shares the landing/dashboard paper token, so all surfaces
+   stay one hue family — definition comes from borders + slightly
+   darker fills instead of tonal layering. */
+
+.postvisit-chat-shell {
+  position: relative;
+  background: linear-gradient(to bottom, #fbfaf5 0%, var(--color-paper) 260px);
+  --background: var(--color-paper);
+  --foreground: #17334a;
+  --card: #fffdf8;
+  --card-foreground: #17334a;
+  --popover: #fffdf8;
+  --popover-foreground: #17334a;
+  --muted: #ece7d9;
+  --muted-foreground: #47637a;
+  --secondary: #ece7d9;
+  --secondary-foreground: #17334a;
+  --accent: #ece7d9;
+  --accent-foreground: #17334a;
+  --border: rgb(23 51 74 / 0.26);
+  --input: rgb(23 51 74 / 0.3);
+  --primary: #17334a;
+  --primary-foreground: #fffdf8;
+  --ring: #17334a;
+  --destructive: #bc3f22;
+}
+
+/* ── Landing: "dokumen bawaan" motion ─────────────────────────── */
+
+@keyframes pv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Rubber stamp landing on the card: drop in oversized, overshoot, settle */
+@keyframes pv-stamp-thump {
+  0% {
+    opacity: 0;
+    transform: rotate(-8deg) scale(2.1);
+  }
+  55% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(0.92);
+  }
+  75% {
+    transform: rotate(-8deg) scale(1.06);
+  }
+  100% {
+    opacity: 0.92;
+    transform: rotate(-8deg) scale(1);
+  }
+}
+
+.pv-rise {
+  animation: pv-rise 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.pv-d1 { animation-delay: 0.05s; }
+.pv-d2 { animation-delay: 0.18s; }
+.pv-d3 { animation-delay: 0.32s; }
+
+.pv-stamp {
+  animation: pv-stamp-thump 0.6s cubic-bezier(0.22, 1.4, 0.36, 1) 0.5s both;
+}
+
+/* Typewriter caret riding the end of a streaming answer */
+@keyframes pv-caret-blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+.pv-caret {
+  animation: pv-caret-blink 1.1s steps(1) infinite;
+}
+
+/* Ink dots while waiting for the first token */
+@keyframes pv-dot-pulse {
+  0%, 80%, 100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.pv-dot {
+  animation: pv-dot-pulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv-rise,
+  .pv-stamp,
+  .pv-caret,
+  .pv-dot {
+    animation: none;
+  }
 }
